@@ -9,21 +9,35 @@ fn main() {
     let args: Vec<_> = env::args().collect();
 
     if args.len() == 1 {
-        println!("Usage: clean-it Term [Project]");
-        println!("\tTerm should be a path to a term (e.g. ~/Winter2018)");
-        println!("\nExamples:\n\tclean-it Winter2018\n\tclean-it Winter2018 P2");
+
     } else if args.len() == 2 {
         let term = &args[1];
         let mut root = env::current_dir().unwrap();
         root.push(term);
         clean_it(&Path::new(&root));
-    } else {
+    } else if args.len() == 3 {
         let term = &args[1];
         let project = &args[2];
         let mut root = env::current_dir().unwrap();
         root.push(term);
         root.push(project);
         clean_it(&Path::new(&root));
+    } else if args.len() == 4 {
+        let term = &args[1];
+        let project = &args[2];
+        let section = format!("GRADERS-Section-{}", &args[3]);
+        let mut root = env::current_dir().unwrap();
+        root.push(term);
+        root.push(project);
+        root.push(section);
+        clean_it(&Path::new(&root));
+    } else {
+        println!("Usage: clean-it Term [Project [Section]]");
+        println!("\tTerm should be a path to a term (e.g. ~/Winter2018)");
+        println!("\nExamples:");
+        println!("\tclean-it Winter2018");
+        println!("\tclean-it Winter2018 P2");
+        println!("\tclean-it Winter2018 P2 1")
     }
 }
 

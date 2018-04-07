@@ -71,9 +71,11 @@ fn clean_project(term: &String, project: &String) {
 }
 
 fn make_clean(d: &Path) {
-    Command::new("make")
-            .current_dir(&d)
-            .arg("clean")
-            .spawn()
-            .expect(&format!("unable to `make clean` in {}", d.display()));
+    let status = Command::new("make")
+        .current_dir(&d)
+        .arg("clean")
+        .status()
+        .expect(&format!("unable to `make clean` in {}", d.display()));
+
+    println!("`make clean` in {} exited with status {}", d.display(), status);
 }

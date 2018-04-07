@@ -9,3 +9,5 @@
 `clean-it Term Project` - Cleans up a complete project for a single term (e.g. `Winter2018 P1`)
 
 `clean-it Term Project Section` - Cleans up a single section of a project in a term (e.g. `Winter2018 P1 1`);
+
+*N.B.* If you enter a directory name incorrectly, no output will be displayed and you'll be left scratching your head. Good luck.

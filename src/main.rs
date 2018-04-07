@@ -1,5 +1,8 @@
+extern crate walkdir;
+
 use std::env;
 use std::path::Path;
+use walkdir::WalkDir;
 
 fn main() {
     let args: Vec<_> = env::args().collect();
@@ -27,20 +30,22 @@ fn clean_term(term: &String) {
 
     match env::set_current_dir(&term_root) {
         Ok(_) => clean_projects_in_term(term_root),
-        Err(_) => panic!("Couldn't `cd` to {:?}", term)
+        Err(_) => panic!("Couldn't `cd` to {:?}", term),
     }
 }
 
 fn clean_projects_in_term(term: &Path) {
-    let projects = fs::read_dir(term).unwrap();
-    let projects = projects.filter(|p| p.is_dir() == true);
-
-    for project in projects {
-        println!("I found project {:?}", project.to_str());
+    // iterates over all entries and ignores any errors
+    for entry in WalkDir::new(term.to_str().unwrap())
+        .into_iter()
+        .filter_map(|e| e.ok())
+    {
+        if entry.file_type().is_dir() {
+            println!("{}", entry.path().display());
+        }
     }
 }
 
 fn clean_project(term: &String, project: &String) {
     println!("Cleaning up project {:?} for term {:?}", project, term);
-
 }

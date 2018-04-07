@@ -37,10 +37,11 @@ fn clean_term(term: &String) {
 fn clean_projects_in_term(term: &Path) {
     // iterates over all entries and ignores any errors
     for entry in WalkDir::new(term.to_str().unwrap())
+        .max_depth(4) // should be the max depth from term to dist
         .into_iter()
         .filter_map(|e| e.ok())
     {
-        if entry.file_type().is_dir() {
+        if entry.file_type().is_dir() && entry.path().to_str().unwrap().ends_with("dist") {
             println!("{}", entry.path().display());
         }
     }

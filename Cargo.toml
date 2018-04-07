@@ -1,0 +1,6 @@
+[package]
+name = "clean-it"
+version = "0.1.0"
+authors = ["Jeremiah Peschka <jeremiah.peschka@gmail.com>"]
+
+[dependencies]
